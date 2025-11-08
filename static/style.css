@@ -1,0 +1,377 @@
+/* ----------------------------------
+ * 1. الخطوط والألوان الأساسية
+ * ---------------------------------- */
+
+/* استيراد خط عربي جميل مثل "Cairo" من جوجل للخطوط */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+:root {
+    --primary-color: #2e7d32; /* أخضر غامق (لون أساسي) */
+    --secondary-color: #fdd835; /* أصفر (لون ثانوي/تمييز) */
+    --text-color: #333; /* لون النصوص الأساسي */
+    --bg-color: #f9f9f9; /* لون الخلفية العام */
+    --card-bg: #fff; /* لون خلفية البطاقات */
+    --muted-text: #666; /* لون النصوص الثانوية */
+    --header-bg: #1b5e20; /* أخضر داكن للرأس */
+    --accent-color: #0288d1; /* أزرق للأزرار الثانوية/المهمة */
+    --font-family: 'Cairo', sans-serif;
+}
+
+/* إعادة تعيين بسيطة لجميع العناصر */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    direction: rtl; /* لضمان التنسيق الصحيح للغة العربية */
+    text-align: right; /* محاذاة النص لليمين */
+}
+
+/* ----------------------------------
+ * 2. التخطيط العام والمكونات
+ * ---------------------------------- */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* الأزرار (Buttons) */
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    font-size: 16px;
+    font-family: var(--font-family);
+    text-align: center;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: var(--card-bg);
+}
+
+.btn.primary:hover {
+    background-color: #1a4f1d;
+    transform: translateY(-2px);
+}
+
+.btn.secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.btn.secondary:hover {
+    background-color: #ffd800;
+    transform: translateY(-2px);
+}
+
+.btn.accent {
+    background-color: var(--accent-color);
+    color: var(--card-bg);
+}
+
+.btn.accent:hover {
+    background-color: #0277bd;
+}
+
+/* العناوين (Headings) */
+h1 { font-size: 40px; font-weight: 900; line-height: 1.2; }
+h2 { font-size: 32px; font-weight: 700; color: var(--primary-color); margin-bottom: 30px; border-bottom: 3px solid var(--secondary-color); display: inline-block; padding-bottom: 5px; }
+h3 { font-size: 24px; font-weight: 700; margin-bottom: 15px; }
+
+p { margin-bottom: 20px; }
+.muted { color: var(--muted-text); font-size: 15px; }
+
+/* الأقسام (Sections) */
+.content-section {
+    padding: 60px 0;
+}
+
+/* ----------------------------------
+ * 3. رأس الصفحة (Header)
+ * ---------------------------------- */
+
+.site-header {
+    background-color: var(--header-bg);
+    color: var(--card-bg);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav li {
+    margin-left: 20px;
+}
+
+.main-nav a {
+    color: var(--card-bg);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 5px 10px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover {
+    color: var(--secondary-color);
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+/* ----------------------------------
+ * 4. قسم البطل (Hero Section)
+ * ---------------------------------- */
+
+.hero-section {
+    background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(46, 125, 50, 0.8)), url('hero-background.jpg') no-repeat center center/cover;
+    /* يجب توفير صورة خلفية باسم hero-background.jpg للمظهر الأجمل */
+    color: var(--card-bg);
+    padding: 100px 0;
+    text-align: right;
+}
+
+.hero-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px; /* المسافة بين المكونات */
+}
+
+.hero-text {
+    flex: 2; /* يأخذ مساحة أكبر */
+}
+
+.hero-text h1 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero-card {
+    flex: 1; /* يأخذ مساحة أقل */
+    background-color: rgba(255, 255, 255, 0.95); /* خلفية شبه شفافة */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+#startBtn {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.status {
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.output {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: left; /* للحفاظ على تنسيق الـ JSON */
+    font-size: 12px;
+    overflow-x: auto;
+}
+
+/* ----------------------------------
+ * 5. قسم الخدمات (Services Section)
+ * ---------------------------------- */
+
+.service-cards {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.service-cards .card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    flex: 1;
+    text-align: center;
+    border-top: 5px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.service-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.service-cards h3 {
+    color: var(--primary-color);
+}
+
+/* ----------------------------------
+ * 6. قسم الأخبار (News Section)
+ * ---------------------------------- */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* الأخبار على اليمين، المعرض على اليسار */
+    gap: 40px;
+}
+
+.news-item {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-right: 4px solid var(--primary-color);
+}
+
+.news-item .date {
+    display: block;
+    font-size: 14px;
+    color: var(--muted-text);
+    margin-top: 10px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.gallery-item {
+    background-color: #eee; /* لون مؤقت لعدم وجود صور */
+    min-height: 150px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-item figcaption {
+    background-color: rgba(0,0,0,0.6);
+    color: var(--card-bg);
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+}
+
+/* ----------------------------------
+ * 7. قسم الأسئلة الشائعة (FAQ)
+ * ---------------------------------- */
+
+#faq-link {
+    text-align: center;
+    background-color: var(--primary-color);
+    color: var(--card-bg);
+    padding: 40px 0;
+}
+
+#faq-link h2 {
+    color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+#faq-link p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* ----------------------------------
+ * 8. تذييل الصفحة (Footer)
+ * ---------------------------------- */
+
+.site-footer {
+    background-color: var(--text-color);
+    color: var(--muted-text);
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ----------------------------------
+ * 9. استجابة التصميم (Media Queries)
+ * ---------------------------------- */
+
+@media (max-width: 900px) {
+    .hero-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-text, .hero-card {
+        flex: none;
+        width: 100%;
+    }
+    .hero-card {
+        order: -1; /* لجعل البطاقة في الأعلى في الجوال */
+    }
+    h1 { font-size: 32px; }
+    h2 { font-size: 28px; }
+    .service-cards {
+        flex-direction: column;
+    }
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 30px;
+    }
+    .main-nav ul {
+        display: none; /* يمكن استبدالها بقائمة همبرغر */
+    }
+    .header-inner {
+        justify-content: center;
+    }
+    .logo {
+        font-size: 20px;
+    }
+}

